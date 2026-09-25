@@ -70,7 +70,7 @@ def make_logo_block(root):
     write = copy.deepcopy(find(root, AVATAR_WRITE))
     write.set(b'Name', LOGO_WRITE)
     props = write.get(b'Properties')
-    props.set(b'PARAMS', u('{"ID":"{=Document:ASSIGNED_BY_ID}","%s":"{=Constant:%s}"}' % (LOGO_FIELD, LOGO_CONST)))
+    props.set(b'PARAMS', u('{"ID":"{=Document:ASSIGNED_BY_ID}","%s":"%s"}' % (LOGO_FIELD, LOGO_DEFAULT)))
     props.set(b'Title', u('Записать логотип в профиль сотрудника'))
     props.set(b'EditorComment', u('Записывает в %s ссылку из константы шаблона «Ссылка на логотип».' % LOGO_FIELD))
 
@@ -165,7 +165,6 @@ def fix_avatar_comment(root):
 def convert(src, dst):
     tree = load_bpt(src)
     (_, root), = tree.get(b'TEMPLATE')
-    add_constant(tree)
     replace_logo_write(root)
     fix_avatar_comment(root)
     emails = patch_emails(root)
